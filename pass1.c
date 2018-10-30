@@ -2,16 +2,22 @@
 #include<conio.h>
 #include<stdlib.h>
 #include<string.h>
+
 void main()
 {
- char opcode[10],operand[10],label[10],code[10][10],ch; 
- char mnemonic[10][10]={"START","LDA","STA","LDCH","STCH","END"};
+ char opcode[10],operand[10],label[10],code[10][10],ch;
+ 
+ char mnemonic[10][10]={"START","LDA","STA","LDCH","STCH","ADD","SHIFTL","SHIFTR","COMP","END"};
+ 
  int locctr,start,len,i=0,j=0;
+ 
  FILE *fp1,*fp2,*fp3;
  fp1=fopen("INPUT.DAT","r");
  fp2=fopen("SYMTAB.DAT","w");
  fp3=fopen("OUT.DAT","w");
+ 
  fscanf(fp1,"%s%s%s",label,opcode,operand);
+ 
  if(strcmp(opcode,"START")==0)
   {
    start=atoi(operand);
@@ -19,8 +25,10 @@ void main()
    fprintf(fp3,"%s\t%s\t%s\n",label,opcode,operand);
    fscanf(fp1,"%s%s%s",label,opcode,operand);
   }
+ 
  else
   locctr=0;
+ 
  while(strcmp(opcode,"END")!=0)
   {
    fprintf(fp3,"%d",locctr);
@@ -48,10 +56,12 @@ void main()
    fprintf(fp3,"\t%s\t%s\t%s\n",label,opcode,operand);
    fscanf(fp1,"%s%s%s",label,opcode,operand);
   }
+ 
   fprintf(fp3,"%d\t%s\t%s\t%s\n",locctr,label,opcode,operand);
   fclose(fp1);
   fclose(fp2);
   fclose(fp3);
+ 
   printf("\n\nThe contents of Input Table :\n\n");
   fp1=fopen("INPUT.DAT","r");
   ch=fgetc(fp1);
@@ -60,6 +70,7 @@ void main()
     printf("%c",ch);
     ch=fgetc(fp1);
    }
+ 
   printf("\n\nThe contents of Output Table :\n\n\t");
   fp3=fopen("OUT.DAT","r");
   ch=fgetc(fp3);
@@ -68,8 +79,10 @@ void main()
     printf("%c",ch);
     ch=fgetc(fp3);
    }
+ 
   len=locctr-start;
   printf("\nThe length of the program is %d.\n\n",len);
+ 
   printf("\n\nThe contents of Symbol Table :\n\n");
   fp2=fopen("SYMTAB.DAT","r");
   ch=fgetc(fp2);
@@ -78,8 +91,10 @@ void main()
     printf("%c",ch);
     ch=fgetc(fp2);
    }
+ 
   fclose(fp1);
   fclose(fp2);
   fclose(fp3);
+ 
   getch();
 }
